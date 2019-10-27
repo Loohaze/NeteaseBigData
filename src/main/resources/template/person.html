@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta charset="UTF-8">
+    <title>个人考试行为基本信息统计</title>
+
+    <link rel="stylesheet" href="../static/staticCSS/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/staticCSS/toastr.min.css">
+    <link rel="stylesheet" href="../static/staticCSS/font-awesome.min.css">
+
+
+    <script type="application/javascript" src="../static/staticJS/jquery.min.js"></script>
+    <script type="application/javascript" src="../static/staticJS/bootstrap.min.js"></script>
+    <script type="application/javascript" src="../static/staticJS/vue.min.js"></script>
+    <script type="application/javascript" src="../static/staticJS/vue-resource.js"></script>
+    <script type="application/javascript" src="../static/staticJS/toastr.min.js"></script>
+    <script type="application/javascript" src="../static/staticJS/echarts.min.js"></script>
+
+    <script type="application/javascript" src="../static/js/person.js"></script>
+
+</head>
+<body>
+<div id="personVue">
+    <div style="width: 80%;margin-left: 10%;margin-top: 20px;">
+
+        <div class="cpp-info-dom">
+            <div class="row cpp-info-dom-row">
+<!--                <span class="col-xs-8">学生编号:&nbsp;&nbsp;-->
+<!--                    <span class="cpp-info-dom-content">{{userId}}</span>-->
+<!--                </span>-->
+                <span class="col-xs-4">学生学号:&nbsp;&nbsp;
+                    <span class="cpp-info-dom-content">{{userSid}}</span>
+                </span>
+                <span class="col-xs-4">学生姓名:&nbsp;&nbsp;
+                    <span class="cpp-info-dom-content">{{userRealName}}</span>
+                </span>
+                <span class="col-xs-4">当前考试:&nbsp;&nbsp;
+                    <span class="cpp-info-dom-content">{{currentExam}}</span>
+                </span>
+            </div>
+            <div class="row cpp-info-dom-row">
+                <div class="col-xs-4">考试分数:&nbsp;&nbsp;
+                    <span class="cpp-info-dom-content">{{score}}</span>
+                </div>
+                <div class="col-xs-4">编译次数:&nbsp;&nbsp;
+                    <span class="cpp-info-dom-content">{{buildCount}}(次)</span>
+                </div>
+                <div class="col-xs-4">编程时长:&nbsp;&nbsp;
+                    <span class="cpp-info-dom-content">{{workTime}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cpp-info-dom">
+            <div class="row cpp-info-dom-row">
+                <div v-for="eachScoreDetail in scoreDetail" class="col-xs-2">{{eachScoreDetail.questionId}}:&nbsp;&nbsp;
+                    <span class="cpp-info-dom-content">{{eachScoreDetail.score}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="timeDurationGraph" class="cpp-ECharts-graph "></div>
+            <div id="showDurationStatisticsDom" class="cpp-info-dom col-xs-4"
+                 v-show="showDurationStaDom">
+                <div class="row cpp-info-dom-row">
+                    <div class="col-xs-12">插入次数:&nbsp;&nbsp;
+                        <span class="cpp-info-dom-content">
+                            {{durationStatistics.insertCount+
+                            durationStatistics.autoInsertCount}}
+                        </span>
+                    </div>
+                    <div class="col-xs-12">删除单词数:&nbsp;&nbsp;
+                        <span class="cpp-info-dom-content">{{durationStatistics.deleteWordCount}}</span>
+                    </div>
+                    <div class="col-xs-12">保存次数:&nbsp;&nbsp;
+                        <span class="cpp-info-dom-content">{{durationStatistics.saveCount}}</span>
+                    </div>
+                    <div class="col-xs-12">DEBUG次数:&nbsp;&nbsp;
+                        <span class="cpp-info-dom-content">{{durationStatistics.debugCount}}</span>
+                    </div>
+                    <div class="col-xs-12">编辑时间:&nbsp;&nbsp;
+                        <span class="cpp-info-dom-content">{{durationStatistics.insertTime}}(min)</span>
+                    </div>
+                    <div class="col-xs-12">DEBUG时间:&nbsp;&nbsp;
+                        <span class="cpp-info-dom-content">{{durationStatistics.debugTime}}(min)</span>
+                    </div>
+                    <div class="col-xs-12">工作时间占比:&nbsp;&nbsp;
+                        <span class="cpp-info-dom-content">{{durationStatistics.validTime}}</span>
+                    </div>
+                    <div class="col-xs-12">行为猜测:&nbsp;&nbsp;
+                        <span class="cpp-info-dom-content">{{durationStatistics.guess}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div v-for="eachProjectBuildPath in allBuildPathInfo">
+            <div class="cpp-info-dom row">
+                <div v-for="(eachBuildInfo,index1) in eachProjectBuildPath">
+                    <div class="cpp-info-dom col-xs-5" v-if="!eachBuildInfo.buildResult">
+                        <div class="col-xs-5">{{index1+1}}:&nbsp;&nbsp;
+                            <span class="cpp-info-dom-content">{{eachBuildInfo.project}}</span>
+                        </div>
+                        <div class="col-xs-7">时间:&nbsp;&nbsp;
+                            <span class="cpp-info-dom-content">{{eachBuildInfo.happenTime}}</span>
+                        </div>
+                        <div v-for="(eachError,index) in eachBuildInfo.buildInfos" class="row">
+                            <span class="cpp-info-dom-content col-xs-11" style="word-break: break-all">{{index+1}}、{{eachError}}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
