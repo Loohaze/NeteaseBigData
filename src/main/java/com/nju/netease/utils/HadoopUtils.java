@@ -43,7 +43,7 @@ public class HadoopUtils {
                 dir = hadoopDir;
                 return null;
             });
-//            this.deleteFileDir(dir);
+            this.deleteFileDir(dir);
             this.createDir();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
