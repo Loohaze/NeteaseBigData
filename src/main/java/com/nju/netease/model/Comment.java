@@ -62,12 +62,12 @@ public class Comment {
 
     @Override
     public String toString() {
-        return "Comment{" +
-                "commentId=" + commentId +
-                ", content='" + content + '\'' +
-                ", time=" + time +
-                ", likedCount=" + likedCount +
-                ", userInfo=" + userInfo.toString() +
+        return "{" +
+                "\"comment_id\":" + commentId +
+                ", \"content\":'" + content + '\'' +
+                ", \"time\":" + time +
+                ", \"liked_count\":" + likedCount +
+                ", \"user_info\":" + userInfo.toString() +
                 '}';
     }
 }

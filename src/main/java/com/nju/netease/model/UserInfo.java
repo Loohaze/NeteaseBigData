@@ -84,14 +84,14 @@ public class UserInfo {
 
     @Override
     public String toString() {
-        return "UserInfo{" +
-                "userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", level=" + level +
-                ", birthday=" + birthday +
-                ", gender=" + gender +
-                ", city=" + city +
-                ", province=" + province +
+        return "{" +
+                "\"user_id\":" + userId +
+                ", \"user_name\":\"" + userName + '\"' +
+                ", \"level\":" + level +
+                ", \"birthday\":" + birthday +
+                ", \"gender\":" + gender +
+                ", \"city\":" + city +
+                ", \"province\":" + province +
                 '}';
     }
 }

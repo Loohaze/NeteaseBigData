@@ -55,11 +55,11 @@ public class CommentData {
 
     @Override
     public String toString() {
-        return "CommentData{" +
-                "id=" + id +
-                ", songId=" + songId +
-                ", songName='" + songName + '\'' +
-                ", commentList=" + commentList +
+        return "{" +
+                "\"id\":" + id +
+                ", \"song_id\":" + songId +
+                ", \"song_name\":'" + songName + '\'' +
+                ", \"comments\":" + commentList +
                 '}';
     }
 }
