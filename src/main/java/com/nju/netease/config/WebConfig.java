@@ -36,7 +36,7 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+"/static/");
-        registry.addResourceHandler("/templates/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+"/templates/");
+        registry.addResourceHandler("/template/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+"/template/");
 
 //        String photoPath="file:"+File.separator+config.getStaticParentPath()+ File.separator+config.getRefereePhotoFile()+File.separator;
 //        String photoPath=config.getRefereePhotoAccessPath();
