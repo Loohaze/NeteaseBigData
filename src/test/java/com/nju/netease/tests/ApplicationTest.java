@@ -5,8 +5,6 @@ import com.nju.netease.model.CommentData;
 import com.nju.netease.model.results.*;
 import com.nju.netease.respository.CommentDataRepository;
 import com.nju.netease.respository.StatisticResultRepository;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,17 +45,7 @@ public class ApplicationTest {
 
     @Test
     public void test3() {
-        JSONArray array = new JSONArray();
-        JSONObject object = new JSONObject();
-        object.put("time","13");
-        object.put("number",10);
-        array.add(object);
-        JSONObject object2 = new JSONObject();
-        object2.put("time","19");
-        object2.put("number",20);
-        array.add(object2);
-        System.out.println(array.toJSONString());
-        statisticResultRepository.insertOneStatisticResult("time",array.toJSONString());
+
 
     }
 

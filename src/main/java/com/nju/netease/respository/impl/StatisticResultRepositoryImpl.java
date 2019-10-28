@@ -1,11 +1,9 @@
 package com.nju.netease.respository.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.nju.netease.model.results.*;
 import com.nju.netease.respository.StatisticResultRepository;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -23,7 +21,7 @@ public class StatisticResultRepositoryImpl implements StatisticResultRepository 
     @Override
     public void insertOneStatisticResult(String type, String result) {
         try {
-            JSONArray array = (JSONArray) new JSONParser().parse(result);
+            JSONArray array = JSONArray.parseArray(result);
             switch (type) {
                 case "age":
                     for (Object o : array) {
@@ -72,7 +70,7 @@ public class StatisticResultRepositoryImpl implements StatisticResultRepository 
                     break;
             }
 
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -132,8 +130,8 @@ public class StatisticResultRepositoryImpl implements StatisticResultRepository 
             }
         }
         List<GenderDistribution> result = new ArrayList<>();
-        for (Map.Entry<Integer,Integer> entry : map.entrySet()) {
-            result.add(new GenderDistribution(entry.getKey(),entry.getValue()));
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            result.add(new GenderDistribution(entry.getKey(), entry.getValue()));
         }
         return result;
     }
@@ -152,28 +150,28 @@ public class StatisticResultRepositoryImpl implements StatisticResultRepository 
             }
         }
         List<LevelDistribution> result = new ArrayList<>();
-        for (Map.Entry<Integer,Integer> entry : map.entrySet()) {
-            result.add(new LevelDistribution(entry.getKey(),entry.getValue()));
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            result.add(new LevelDistribution(entry.getKey(), entry.getValue()));
         }
         return result;
     }
 
     @Override
     public List<ProvinceDistribution> getProvinceDistribution() {
-        Map<Long,Integer> map = new HashMap<>();
+        Map<Long, Integer> map = new HashMap<>();
         Query query = new Query();
         List<ProvinceDistribution> list = mongoTemplate.find(query, ProvinceDistribution.class);
         for (ProvinceDistribution provinceDistribution : list) {
             Long code = provinceDistribution.getCode();
             if (map.containsKey(code)) {
-                map.replace(code, map.get(code)+provinceDistribution.getNumber());
+                map.replace(code, map.get(code) + provinceDistribution.getNumber());
             } else {
-                map.put(code,provinceDistribution.getNumber());
+                map.put(code, provinceDistribution.getNumber());
             }
         }
         List<ProvinceDistribution> result = new ArrayList<>();
-        for (Map.Entry<Long,Integer> entry : map.entrySet()) {
-            result.add(new ProvinceDistribution(entry.getKey(),entry.getValue()));
+        for (Map.Entry<Long, Integer> entry : map.entrySet()) {
+            result.add(new ProvinceDistribution(entry.getKey(), entry.getValue()));
         }
         return result;
     }
