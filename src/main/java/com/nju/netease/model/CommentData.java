@@ -1,5 +1,6 @@
 package com.nju.netease.model;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;

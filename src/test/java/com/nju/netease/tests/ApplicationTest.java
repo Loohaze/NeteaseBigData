@@ -1,5 +1,6 @@
 package com.nju.netease.tests;
 
+import com.alibaba.fastjson.JSONObject;
 import com.nju.netease.model.Comment;
 import com.nju.netease.model.CommentData;
 import com.nju.netease.model.results.*;
@@ -26,11 +27,12 @@ public class ApplicationTest {
 
     @Test
     public void test1() {
-        CommentData commentData = commentDataRepository.findBySongId(510034511);
+        CommentData commentData = commentDataRepository.findBySongId(442314077);
+        System.out.println(JSONObject.toJSONString(commentData));
         List<Comment> comments = commentData.getCommentList();
-        for (Comment comment : comments) {
-            System.out.println(comment.toString());
-        }
+//        for (Comment comment : comments) {
+//            System.out.println(comment.toString());
+//        }
         System.out.println(commentData.toString());
     }
 

@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class CommentDataRepositoryImpl implements CommentDataRepository {
@@ -21,7 +23,14 @@ public class CommentDataRepositoryImpl implements CommentDataRepository {
     @Override
     public CommentData findBySongId(int songId) {
         Query query = new Query(Criteria.where("song_id").is(songId));
-        return mongoTemplate.findOne(query, CommentData.class);
+        CommentData commentData = mongoTemplate.findOne(query, CommentData.class);
+        Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+        for (Comment comment : commentData.getCommentList()) {
+            Matcher m = p.matcher(comment.getContent());
+            String newComment = m.replaceAll("");
+            comment.setContent(newComment);
+        }
+        return commentData;
     }
 
     @Override
