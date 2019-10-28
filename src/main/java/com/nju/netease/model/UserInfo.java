@@ -1,21 +1,29 @@
 package com.nju.netease.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 public class UserInfo {
 
+    @Field("user_id")
     private int userId;
 
+    @Field("user_name")
     private String userName;
 
+    @Field("level")
     private int level;
 
+    @Field("birthday")
     private long birthday;
 
+    @Field("gender")
     private int gender;
 
+    @Field("city")
     private int city;
 
+    @Field("province")
     private int province;
 
     public int getUserId() {
@@ -72,5 +80,18 @@ public class UserInfo {
 
     public void setProvince(int province) {
         this.province = province;
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", level=" + level +
+                ", birthday=" + birthday +
+                ", gender=" + gender +
+                ", city=" + city +
+                ", province=" + province +
+                '}';
     }
 }

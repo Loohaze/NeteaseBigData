@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
-@Document(collection="华语list_comments")
+@Document(collection="comments")
 public class CommentData {
 
     @Id

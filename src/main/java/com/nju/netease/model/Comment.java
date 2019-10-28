@@ -1,17 +1,23 @@
 package com.nju.netease.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 public class Comment {
 
+    @Field("comment_id")
     private int commentId;
 
+    @Field("content")
     private String content;
 
+    @Field("time")
     private long time;
 
+    @Field("liked_count")
     private int likedCount;
 
+    @Field("user_info")
     private UserInfo userInfo;
 
     public int getCommentId() {
@@ -61,7 +67,7 @@ public class Comment {
                 ", content='" + content + '\'' +
                 ", time=" + time +
                 ", likedCount=" + likedCount +
-                ", userInfo=" + userInfo +
+                ", userInfo=" + userInfo.toString() +
                 '}';
     }
 }
