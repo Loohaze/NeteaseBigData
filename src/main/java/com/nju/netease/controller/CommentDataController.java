@@ -19,9 +19,9 @@ public class CommentDataController {
         this.commentDataRepository = commentDataRepository;
     }
 
-    @GetMapping(value = "")
+    @GetMapping(value = "/getComment")
     @ResponseBody
-    public ResponseEntity<CommentData> getOneCommentDataBySongId(@RequestParam int songId) {
+    public ResponseEntity<CommentData> getOneCommentDataBySongId(@RequestParam("songId") int songId) {
         CommentData commentData = commentDataRepository.findBySongId(songId);
         return new ResponseEntity<>(commentData, HttpStatus.OK);
     }
