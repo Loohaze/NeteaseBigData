@@ -122,6 +122,8 @@ public class HadoopUtils {
             output.write(bytes);
             LOGGER.info("[SUCCESS]===SUCCESS APPEND NEW CONTENT TO HADOOP FILE:[" + conf.get("fs.defaultFS")
                     + fileName+"]");
+            output.flush();
+            output.close();
         }
 
     }
