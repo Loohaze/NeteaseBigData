@@ -30,8 +30,8 @@ public class CommentDataController {
         for (int i=0;i<list.size();i++){
             int songId=list.get(i);
             CommentData commentData = commentDataRepository.findBySongId(songId);
-            hadoopUtils.appendFile("testStreaming.json", JSONObject.toJSONString(commentData)+"\r\n");
-            Thread.sleep(500);
+            hadoopUtils.createHadoopFile("testStreaming"+i+".json", JSONObject.toJSONString(commentData)+"\r\n");
+            Thread.sleep(3000);
 
         }
     }
