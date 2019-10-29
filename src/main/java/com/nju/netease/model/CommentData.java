@@ -5,10 +5,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Document(collection="comments")
-public class CommentData {
+public class CommentData implements Serializable {
+
+    private static final long serialVersionUID = -3258839839160856613L;
 
     @Id
     private Object id;
