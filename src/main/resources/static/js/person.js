@@ -15,6 +15,7 @@ function init() {
             levelGraphData:[],
             regionGraphData:[],
             mapData:"",
+            secretPerson:0,
 
             timeGraph:"",
             ageGraph:"",
@@ -54,14 +55,16 @@ function init() {
                 //age render
                 var ageData=[];
                 for(var i=0;i<this.ageGraphData.length;i++){
-                    // if(this.ageGraphData[i].age<=1920||this.ageGraphData[i].age>==2020){
-                    //     break;
-                    // }
-                    ageData[i]={
-                        birthday: this.ageGraphData===0?"保密":JSON.stringify(this.ageGraphData[i].age),
-                        number: this.ageGraphData[i].number
+                    if(this.ageGraphData[i].age===-1){
+                        this.secretPerson=this.ageGraphData[i].number;
+                        // console.log(this.secretPerson);
                     }
+                    ageData[i] = {
+                        birthday: JSON.stringify(this.ageGraphData[i].age),
+                        number: this.ageGraphData[i].number
+                    };
                 }
+                ageData.splice(0,1);
                 this.ageGraph=echarts.init(document.getElementById("ageDistribution"));
                 let ageOption = {
                     tooltip: {
@@ -178,6 +181,12 @@ function init() {
                     };
 
                 }
+                var MaxNum=0;
+                for(var i=0;i<regionData.length;i++){
+                    if(regionData[i].value>MaxNum){
+                        MaxNum=regionData[i].value;
+                    }
+                }
                 console.log(regionData);
                 this.regionGraph=echarts.init(document.getElementById("regionDistribution"));
                 let regionOption = {
@@ -193,15 +202,14 @@ function init() {
 
                     //左侧小导航图标
                     visualMap: {
-                        show : true,
-                        x: 'left',
-                        y: 'center',
-                        splitList: [
-                            {start: 500, end:600},{start: 400, end: 500},
-                            {start: 300, end: 400},{start: 200, end: 300},
-                            {start: 100, end: 200},{start: 0, end: 100},
-                        ],
-                        color: ['#5475f5', '#9feaa5', '#85daef','#74e2ca', '#e6ac53', '#9fb5ea']
+                        left: 'right',
+                        min: 0,
+                        max: MaxNum,
+                        inRange: {
+                            color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+                        },
+                        // text:['High','Low'],           // 文本，默认为数值文本
+                        calculable: true
                     },
 
                     //配置属性
