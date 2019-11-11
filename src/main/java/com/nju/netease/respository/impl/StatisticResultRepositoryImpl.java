@@ -83,6 +83,9 @@ public class StatisticResultRepositoryImpl implements StatisticResultRepository 
         List<AgeDistribution> list = mongoTemplate.find(query, AgeDistribution.class);
         for (AgeDistribution ageDistribution : list) {
             Integer age = ageDistribution.getAge();
+            if (age > 2019) {
+                continue;
+            }
             if (map.containsKey(age)) {
                 map.replace(age, map.get(age) + ageDistribution.getNumber());
             } else {

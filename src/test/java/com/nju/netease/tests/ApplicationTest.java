@@ -3,8 +3,10 @@ package com.nju.netease.tests;
 import com.alibaba.fastjson.JSONObject;
 import com.nju.netease.model.Comment;
 import com.nju.netease.model.CommentData;
+import com.nju.netease.model.graph.IndegreeTopPlaylistNode;
 import com.nju.netease.model.results.*;
 import com.nju.netease.respository.CommentDataRepository;
+import com.nju.netease.respository.GraphResultRepository;
 import com.nju.netease.respository.StatisticResultRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +24,8 @@ public class ApplicationTest {
     private CommentDataRepository commentDataRepository;
     @Autowired
     private StatisticResultRepository statisticResultRepository;
+    @Autowired
+    private GraphResultRepository graphResultRepository;
 
 
 
@@ -89,5 +93,10 @@ public class ApplicationTest {
         for (ProvinceDistribution a : result) {
             System.out.println(a.toString());
         }
+    }
+
+    @Test
+    public void testGraph1(){
+        List<IndegreeTopPlaylistNode> nodes =graphResultRepository.getTopPlaylistNodes();
     }
 }

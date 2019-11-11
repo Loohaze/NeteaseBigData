@@ -31,7 +31,7 @@ public class CommentDataController {
             int songId=list.get(i);
             CommentData commentData = commentDataRepository.findBySongId(songId);
             hadoopUtils.createHadoopFile("testStreaming"+i+".json", JSONObject.toJSONString(commentData)+"\r\n");
-            Thread.sleep(3000);
+            Thread.sleep(1000);
 
         }
     }
