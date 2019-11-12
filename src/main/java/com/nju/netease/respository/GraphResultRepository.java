@@ -17,4 +17,12 @@ public interface GraphResultRepository {
     List<AddDegreeNode> getAddNodes();
 
     List<AddDegreeEdge> getAddEdges();
+
+    List<SongRank> getSongRanks();
+
+    List<PlaylistRank> getPlayListRanks();
+
+    List<AvgLevelRank> getAvgLevelRanks();
+
+
 }

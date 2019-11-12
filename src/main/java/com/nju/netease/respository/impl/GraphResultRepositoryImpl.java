@@ -58,4 +58,19 @@ public class GraphResultRepositoryImpl implements GraphResultRepository {
         List<AddDegreeEdge> list = mongoTemplate.find(query, AddDegreeEdge.class);
         return list;
     }
+
+    @Override
+    public List<SongRank> getSongRanks() {
+        return mongoTemplate.find(new Query(), SongRank.class);
+    }
+
+    @Override
+    public List<PlaylistRank> getPlayListRanks() {
+        return mongoTemplate.find(new Query(), PlaylistRank.class);
+    }
+
+    @Override
+    public List<AvgLevelRank> getAvgLevelRanks() {
+        return mongoTemplate.find(new Query(), AvgLevelRank.class);
+    }
 }

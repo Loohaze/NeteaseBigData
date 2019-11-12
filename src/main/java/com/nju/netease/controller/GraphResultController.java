@@ -47,4 +47,19 @@ public class GraphResultController {
     public List<IndegreeTopPlaylistEdge> getTopListEdges() {
         return graphResultRepository.getTopPlaylistEdges();
     }
+
+    @GetMapping(value = "/getSongRanks")
+    public List<SongRank> getSongRanks(){
+        return graphResultRepository.getSongRanks();
+    }
+
+    @GetMapping(value = "/getPlaylistRanks")
+    public List<PlaylistRank> getPlayListRanks(){
+        return graphResultRepository.getPlayListRanks();
+    }
+
+    @GetMapping(value = "/getAvgLevelRanks")
+    public List<AvgLevelRank> getAvgLevelRanks() {
+        return graphResultRepository.getAvgLevelRanks();
+    }
 }
