@@ -49,7 +49,8 @@ function init() {
                 var myColor = ['#eb2100', '#eb3600', '#d0570e', '#d0a00e', '#34da62', '#00e9db', '#00c0e9', '#0096f3', '#33CCFF', '#33FFCC'];
                 var name1=[];
                 var rank1=[];
-                for(var i=0;i<this.songGraphData.length;i++){
+                // for(var i=0;i<this.songGraphData.length;i++){
+                for(var i=0;i<50;i++){
                     name1[i]=this.songGraphData[i].name;
                     rank1[i]=this.songGraphData[i].rank;
                 }
@@ -74,7 +75,8 @@ function init() {
                             textStyle: {
                                 color: '#ffffff',
                                 fontSize: '16',
-                            }
+                            },
+                            interval: 0
                         },
                         data: name1
                     }, {
@@ -149,7 +151,8 @@ function init() {
                 };
                 var name2=[];
                 var rank2=[];
-                for(var i=0;i<this.playlistGraphData.length;i++){
+                // for(var i=0;i<this.playlistGraphData.length;i++){
+                for(var i=0;i<50;i++){
                     name2[i]=this.playlistGraphData[i].name;
                     rank2[i]=this.playlistGraphData[i].rank;
                 }
@@ -174,7 +177,8 @@ function init() {
                             textStyle: {
                                 color: '#ffffff',
                                 fontSize: '16',
-                            }
+                            },
+                            interval: 0
                         },
                         data: name2
                     }, {
@@ -251,6 +255,7 @@ function init() {
                 var name3=[];
                 var rank3=[];
                 for(var i=0;i<this.levelGraphData.length;i++){
+                // for(var i=0;i<50;i++){
                     name3[i]=this.levelGraphData[i].name;
                     rank3[i]=this.levelGraphData[i].level;
                 }
@@ -275,7 +280,8 @@ function init() {
                             textStyle: {
                                 color: '#ffffff',
                                 fontSize: '16',
-                            }
+                            },
+                            interval: 0
                         },
                         data: name3
                     }, {
