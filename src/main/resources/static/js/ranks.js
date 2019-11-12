@@ -22,30 +22,6 @@ function init() {
                 console.log("start rendering!");
                 //song render
                 this.songGraph=echarts.init(document.getElementById("song"));
-                let songOption = {
-                    tooltip: {
-                    },
-                    title: {
-                        text: "歌曲排行",
-                        left: 'center'
-                    },
-                    dataset: {
-                        dimensions: ['name', 'rank'],
-                        source: this.songGraphData
-                    },
-                    grid: {
-                        height:300
-                    },
-                    xAxis: {
-                        type: 'category'
-                    },
-                    yAxis: {
-                    },
-                    series: [{
-                        type: 'bar'
-                    }]
-                };
-
                 var myColor = ['#eb2100', '#eb3600', '#d0570e', '#d0a00e', '#34da62', '#00e9db', '#00c0e9', '#0096f3', '#33CCFF', '#33FFCC'];
                 var name1=[];
                 var rank1=[];
@@ -54,6 +30,9 @@ function init() {
                     name1[i]=this.songGraphData[i].name;
                     rank1[i]=this.songGraphData[i].rank;
                 }
+
+                name1.reverse();
+                rank1.reverse();
 
                 let option = {
                     backgroundColor: '#0e2147',
@@ -125,30 +104,6 @@ function init() {
 
                 //playlist render
                 this.playlistGraph=echarts.init(document.getElementById("playlist"));
-                let playlistOption = {
-                    tooltip: {
-                    },
-                    title: {
-                        text: "歌单排行",
-                        left: 'center'
-                    },
-                    dataset: {
-                        dimensions: ['name', 'rank'],
-                        source: this.playlistGraphData
-                    },
-                    grid: {
-                        height:300
-                    },
-                    xAxis: {
-                        type: 'category'
-                    },
-                    yAxis: {
-                    },
-                    series: [{
-                        type: 'bar'
-                    }]
-
-                };
                 var name2=[];
                 var rank2=[];
                 // for(var i=0;i<this.playlistGraphData.length;i++){
@@ -156,7 +111,8 @@ function init() {
                     name2[i]=this.playlistGraphData[i].name;
                     rank2[i]=this.playlistGraphData[i].rank;
                 }
-
+                name2.reverse();
+                rank2.reverse();
                 let option2 = {
                     backgroundColor: '#0e2147',
                     grid: {
@@ -227,31 +183,6 @@ function init() {
                 //level render
                 this.levelGraph=echarts.init(document.getElementById("level"));
 
-                let levelOption = {
-                    tooltip: {
-                    },
-                    title: {
-                        text: "等级排行",
-                        left: 'center'
-                    },
-                    dataset: {
-                        dimensions: ['name', 'level'],
-                        source: this.levelGraphData
-                    },
-                    grid: {
-                        height:300
-                    },
-                    xAxis: {
-                        type: 'category'
-                    },
-                    yAxis: {
-                    },
-                    series: [{
-                        type: 'bar'
-                    }]
-
-                };
-
                 var name3=[];
                 var rank3=[];
                 for(var i=0;i<this.levelGraphData.length;i++){
@@ -259,7 +190,8 @@ function init() {
                     name3[i]=this.levelGraphData[i].name;
                     rank3[i]=this.levelGraphData[i].level;
                 }
-
+                name3.reverse();
+                rank3.reverse();
                 let option3 = {
                     backgroundColor: '#0e2147',
                     grid: {
