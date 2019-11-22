@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
+import scala.actors.threadpool.Arrays;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,17 @@ public class MlDataRepositoryImpl implements MlDataRepository {
     @Override
     public List<Recommend> getRecommendByUser(int userId) {
         //处理id
+        int realId=0;
+        int[] array= {359264686,381112666,441060029,1727934259,33114592,1362641907,288426827,284148667,357381331,340667401,351495316,338905674,392453169,485845770,259724495,1875087384,262220552};
+        for(int i=0;i<array.length;i++){
+            if(userId==array[i]){
+                realId=i+1;
+                break;
+            }
+        }
 
-        Query query = new Query(Criteria.where("filter.0").is(userId));
+
+        Query query = new Query(Criteria.where("filter.0").is(realId));
         List<Recommend> recData = mongoTemplate.find(query, Recommend.class);
         List<Recommend> list=recData.subList(0,10);
         for(int i =1;i<list.size();i++) {
