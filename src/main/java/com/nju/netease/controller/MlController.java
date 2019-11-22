@@ -33,10 +33,14 @@ public class MlController {
         return mlDataRepository.getAllUsers();
     }
 
-    @RequestMapping("/Song")
+    @PostMapping("/Song")
     @ResponseBody
-    public CommentData getSong(@RequestParam("songId") int id) throws IOException, InterruptedException {
-        return mlDataRepository.getMlSong(id);
+    public JSONObject getSong(@RequestParam("songId") int id) throws IOException, InterruptedException {
+        JSONObject jsonObject=new JSONObject();
+        CommentData mlSong = mlDataRepository.getMlSong(id);
+        jsonObject.put("songId",mlSong.getSongId());
+        jsonObject.put("songName",mlSong.getSongName());
+        return jsonObject;
     }
 
 

@@ -203,55 +203,78 @@ function MLLibVueFun() {
                 })
             },
             getUserRecommendSong:function (userId,userName) {
+                console.log(userId+";"+userName);
                 this.initialUserRecommendSongsChart();
                 let formData=new FormData;
                 formData.append("userId",userId);
                 this.$http.post("/ml/rec",formData).then(function (response) {
                     let responseData=response.data;
+                    let allRecommendRaw=[];
                     let allSongs=[];
                     let allSongAndRatioData=[];
-                    MLLibVue.userRecommendSongsChart.hideLoading();
-                    MLLibVue.userRecommendSongsChart.setOption({
-                        title : {
-                            text: userName+'--歌曲推荐',
-                            subtext: '前10',
-                            x:'center'
-                        },
-                        tooltip : {
-                            trigger: 'item',
-                            formatter: "{a} <br/>{b} : {c} ({d}%)"
-                        },
-                        legend: {
-                            x : 'center',
-                            y : 'bottom',
-                            data:allSongs
-                        },
-                        toolbox: {
-                            show : true,
-                            feature : {
-                                mark : {show: true},
-                                dataView : {show: true, readOnly: false},
-                                magicType : {
-                                    show: true,
-                                    type: ['pie', 'funnel']
-                                },
-                                restore : {show: true},
-                                saveAsImage : {show: true}
-                            }
-                        },
-                        calculable : true,
-                        series : [
+                    for (let i=0;i<responseData.length;i++){
 
-                            {
-                                name:'面积模式',
-                                type:'pie',
-                                radius : [30, 110],
-                                center : ['75%', '50%'],
-                                roseType : 'area',
-                                data:allSongAndRatioData
-                            }
-                        ]
-                    })
+                        let tmpFormData=new FormData;
+                        tmpFormData.append("songId",parseInt(responseData[i].recs[1]));
+                        MLLibVue.$http.post("/ml/Song",tmpFormData).then(function (res) {
+                            console.log(res);
+                            let songData=res.data;
+                            let recDict={"songId":parseInt(responseData[i].recs[1]),
+                                "ratio":responseData[i].recs[2],
+                                "songName":songData.songName};
+                            allRecommendRaw.push(recDict);
+                            allSongs.push(songData.songName);
+                            allSongAndRatioData.push(responseData[i].recs[2]);
+                        });
+
+                    }
+                    console.log(allSongs);
+
+                    if (allSongs.length==responseData.length){
+                        MLLibVue.userRecommendSongsChart.hideLoading();
+                        MLLibVue.userRecommendSongsChart.setOption({
+                            title : {
+                                text: userName+'--歌曲推荐',
+                                subtext: '前10',
+                                x:'center'
+                            },
+                            tooltip : {
+                                trigger: 'item',
+                                formatter: "{a} <br/>{b} : {c} ({d}%)"
+                            },
+                            legend: {
+                                x : 'center',
+                                y : 'bottom',
+                                data:allSongs
+                            },
+                            toolbox: {
+                                show : true,
+                                feature : {
+                                    mark : {show: true},
+                                    dataView : {show: true, readOnly: false},
+                                    magicType : {
+                                        show: true,
+                                        type: ['pie', 'funnel']
+                                    },
+                                    restore : {show: true},
+                                    saveAsImage : {show: true}
+                                }
+                            },
+                            calculable : true,
+                            series : [
+
+                                {
+                                    name:'面积模式',
+                                    type:'pie',
+                                    radius : [30, 110],
+                                    center : ['75%', '50%'],
+                                    roseType : 'area',
+                                    data:allSongAndRatioData
+                                }
+                            ]
+                        })
+                    }
+
                 })
             },
         },
