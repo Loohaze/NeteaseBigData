@@ -206,7 +206,7 @@ function MLLibVueFun() {
                 this.initialUserRecommendSongsChart();
                 let formData=new FormData;
                 formData.append("userId",userId);
-                this.$http.post("",formData).then(function (response) {
+                this.$http.post("/ml/rec",formData).then(function (response) {
                     let responseData=response.data;
                     let allSongs=[];
                     let allSongAndRatioData=[];
