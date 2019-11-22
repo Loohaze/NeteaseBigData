@@ -1,6 +1,7 @@
 package com.nju.netease.respository;
 
 import com.nju.netease.model.CommentData;
+import com.nju.netease.model.HotWord;
 import com.nju.netease.model.Recommend;
 import com.nju.netease.model.UserInfo;
 
@@ -11,7 +12,7 @@ public interface MlDataRepository {
     List<Recommend> getRecommendByUser(int userId);
 
     //top 50
-    List<String> getTopList();
+    List<HotWord> getTopList();
 
     List<UserInfo> getAllUsers();
 

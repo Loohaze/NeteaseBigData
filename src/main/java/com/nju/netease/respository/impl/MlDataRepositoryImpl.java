@@ -52,12 +52,12 @@ public class MlDataRepositoryImpl implements MlDataRepository {
     }
 
     @Override
-    public List<String> getTopList() {
+    public List<HotWord> getTopList() {
         Query query = new Query();
         List<Word2Vec> vecData = mongoTemplate.find(query, Word2Vec.class);
         String[] filters={"commentList","commentId","content","likedCount","time",
                 "userInfo","birthday","city","gender","level","province","userId","userName"};
-        List<String> list=new ArrayList<>();
+        List<HotWord> list=new ArrayList<>();
         for(Word2Vec vec:vecData){
             boolean canAdd=true;
             String word=vec.getVecs().get(0);
@@ -67,10 +67,19 @@ public class MlDataRepositoryImpl implements MlDataRepository {
                 }
             }
             if(canAdd){
-                list.add(word);
+                double rate=getSum(vec.getVecs());
+                list.add(new HotWord(word,rate));
             }
         }
         return list;
+    }
+
+    public double getSum(List<String> vecs){
+        double sum=0.0;
+        for(int i=1;i<vecs.size();i++){
+            sum+=Math.abs(Double.parseDouble(vecs.get(i)));
+        }
+        return sum;
     }
 
     @Override

@@ -2,10 +2,7 @@ package com.nju.netease.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
-import com.nju.netease.model.Comment;
-import com.nju.netease.model.CommentData;
-import com.nju.netease.model.Recommend;
-import com.nju.netease.model.UserInfo;
+import com.nju.netease.model.*;
 import com.nju.netease.respository.CommentDataRepository;
 import com.nju.netease.respository.MlDataRepository;
 import com.nju.netease.utils.HadoopUtils;
@@ -44,7 +41,7 @@ public class MlController {
 
 
     @RequestMapping("/topList")
-    public List<String> getToplist() throws IOException, InterruptedException {
+    public List<HotWord> getToplist() throws IOException, InterruptedException {
         return mlDataRepository.getTopList();
     }
 
