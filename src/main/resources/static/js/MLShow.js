@@ -46,7 +46,7 @@ function MLLibVueFun() {
                     selectItemName:"question",  //选择框元素对应的name名称
                     columns: [
                         {
-                            field: 'user_name',
+                            field: 'userName',
                             title: '用户昵称',
                             sortable:true,
                         },
@@ -67,7 +67,7 @@ function MLLibVueFun() {
                         },
                     ],
                     onDblClickRow:function (row, $element, field) {
-                        MLLibVue.getUserRecommendSong(row.user_id,row.user_name)
+                        MLLibVue.getUserRecommendSong(row.userId,row.userName)
                         // console.log(row.userId);
                     },
                 });
@@ -144,10 +144,10 @@ function MLLibVueFun() {
             getUserInfoTable:function () {
                 this.initialPartUserDataTable();
                 this.partUserDataTable.bootstrapTable("showLoading");
-                this.$http.get().then(function (response) {
+                this.$http.get("/ml/Users").then(function (response) {
                     let responseData=response.data;
 
-                    this.partUserDataTable.bootstrapTable("load",responseData.response);
+                    this.partUserDataTable.bootstrapTable("load",responseData);
                     this.partUserDataTable.bootstrapTable("refresh");
                     this.partUserDataTable.bootstrapTable("hideLoading");
                 })

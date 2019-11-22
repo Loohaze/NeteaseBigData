@@ -49,7 +49,7 @@ public class MlController {
     }
 
 
-    @GetMapping(value = "/rec")
+    @PostMapping(value = "/rec")
     @ResponseBody
     public List<Recommend> getOneCommentDataBySongId(@RequestParam("userId") int userId) {
         return mlDataRepository.getRecommendByUser(userId);
