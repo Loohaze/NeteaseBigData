@@ -1,13 +1,17 @@
+import java.util
+import java.util.Collections
+
+import com.mongodb.spark.MongoSpark
 import org.apache.spark.mllib.feature.Word2VecModel
 import org.apache.spark.{SparkConf, SparkContext}
+import org.bson.Document
+
+import scala.collection.JavaConverters._
 //import org.apache.spark.ml.linalg.Vectors
-import org.apache.spark.mllib.clustering.{KMeans, KMeansModel}
 import org.apache.spark.mllib.feature.Word2Vec
-import org.apache.spark.mllib.linalg.Vectors
-import org.apache.spark.mllib.recommendation.ALS
-import org.apache.spark.mllib.recommendation.MatrixFactorizationModel
-import org.apache.spark.mllib.recommendation.Rating
+import org.apache.spark.mllib.recommendation.{ALS, Rating}
 //import org.apache.spark.sql.SparkSession
+
 
 object Ml{
 
@@ -21,49 +25,39 @@ object Ml{
     val model = word2vec.fit(input)
     println("model word size: " + model.getVectors.size)
 //        model.save(sc, "kmeansModel")
-    model.getVectors.foreach{
-      println
-    }
-//    model.getVectors.foreach(r->r)
+    val vectorswords = model.getVectors
+    println("vectorswords****************")
+    println(vectorswords)
+    println("vectorswords****************")
+    val unit = vectorswords.foreach(r => {
+      println("word2vecRRRR=======")
+      println(r)
+      var allLinkList = List(r._1)
+      val floats = r._2.map(x => {
+        x.toString
+      })
+      allLinkList = List.concat(allLinkList,floats)
+      println("allLinkListt")
+      println(allLinkList)
+      println("allLinkList")
+
+
+      println("word2vecRRRR=======")
+      val documenvvvvv = sc.parallelize(
+        Seq(new Document("word2vec", allLinkList.asJava))
+      )
+      println("documenvvvvv===================")
+      println(documenvvvvv)
+      println("documenvvvvv===================")
+      MongoSpark.save(documenvvvvv)
+
+      documenvvvvv
+    })
+
 
     return model
 
 
-    //Save and load model
-//    model.save(sc, "kmeansModel.txt")
-//    val local = model.getVectors.map{
-//      case (word, vector) => Seq(word, vector.mkString(" ")).mkString(":")
-//    }.toArray
-//    sc.parallelize(local).saveAsTextFile("kmeansVector.txt")
-//
-//    //predict similar words
-//    val like = model.findSynonyms("现在", 40)
-    ////    for ((item, cos) <- like) {
-    ////      println(s"$item  $cos")
-    ////    }
-
-    //val sameModel = Word2VecModel.load(sc, "word2vec模型路径")
-  }
-
-  def kmeans(sc:SparkContext)={
-    val data = sc.textFile("songOutput/64561.txt")
-    val parsedData = data.map(s => Vectors.dense(s.split(',').map(_.toDouble))).cache()
-    val model1=word2VecRun(sc);
-//    val array:Array[Vector] = model1.
-//    val parsedData=sc.parallelize(array,1)
-
-    // Cluster the data into two classes using KMeans
-    val numClusters = 2
-    val numIterations = 20
-    val clusters = KMeans.train(parsedData, numClusters, numIterations)
-
-    // Evaluate clustering by computing Within Set Sum of Squared Errors
-    val WSSSE = clusters.computeCost(parsedData)
-    println(s"Within Set Sum of Squared Errors = $WSSSE")
-
-    // Save and load model
-//    clusters.save(sc, "kmeansModel")
-//    val sameModel = KMeansModel.load(sc, "target/org/apache/spark/KMeansExample/KMeansModel")
   }
 
 
@@ -95,12 +89,39 @@ object Ml{
       err * err
     }.mean()
     println(s"Mean Squared Error = $MSE")
-    model.productFeatures.collect().foreach{
-      println
-    }
-    model.userFeatures.collect().foreach{
-      println
-    }
+//    model.productFeatures.collect().foreach{
+//      println
+//    }
+    println("********user recommend***************")
+
+    val features = model.userFeatures
+    val value = features.collect().foreach(f => {
+      println("======ratings=====")
+      println(ratings)
+      val unit = ratings.collect().map(x => {
+        val doubles = Array(x.user,x.product,x.rating)
+        val documenttttt=sc.parallelize(
+          Seq(new Document("filter",List(x.user,x.product,x.rating).asJava))
+        )
+        MongoSpark.save(documenttttt)
+
+        documenttttt
+      })
+      unit
+    })
+
+
+
+
+    //写入mongodb
+
+
+//    val documents = sc.parallelize((1 to 10).map(i => Document.parse(s"{test: $i}")))
+
+//    model.userFeatures.foreach(r->print(new Tuple2(r)))
+
+////    // 将数据写入mongo
+//        MongoSpark.save(model.recommendProductsForUsers(1),writeFilterConfig)
 
     // Save and load model
 //    model.save(sc, "filterModel")
@@ -109,12 +130,23 @@ object Ml{
 
 
   def main(args:Array[String])={
-    val sparkConf = new SparkConf().setAppName("netease").setMaster("local")
+//    Logger.getLogger("org.apache.spark").setLevel(Level.ERROR)
+    val sparkConf = new SparkConf().setAppName("netease")
+                                    .setMaster("local")
+      .set("spark.mongodb.input.uri", "mongodb://172.19.240.124")
+      .set("spark.mongodb.input.database", "netease")
+      .set("spark.mongodb.output.collection", "word2vec")
+      .set("spark.mongodb.output.uri", "mongodb://172.19.240.124")
+      .set("spark.mongodb.output.database", "netease")
+//      .set("spark.serializer", "org.apache.spark.serializer.KryoSerializer")
+//      .set("spark.mongodb.output.collection", "graph_result")
+
     val sc= new SparkContext(sparkConf)
     sc.setLogLevel("ERROR")
-    filtering(sc)
-//    kmeans(sc)
-//    val s=word2VecRun(sc)
+//    Logger.getLogger("org").setLevel(Level.ERROR)
+//    Logger.getLogger("com").setLevel(Level.ERROR)
+//    filtering(sc)
+    val s=word2VecRun(sc)
   }
 
 }
