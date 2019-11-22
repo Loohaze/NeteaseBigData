@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Repository
 public class MlDataRepositoryImpl implements MlDataRepository {
@@ -56,7 +58,7 @@ public class MlDataRepositoryImpl implements MlDataRepository {
         Query query = new Query();
         List<Word2Vec> vecData = mongoTemplate.find(query, Word2Vec.class);
         String[] filters={"commentList","commentId","content","likedCount","time",
-                "userInfo","birthday","city","gender","level","province","userId","userName"};
+                "userInfo","birthday","city","gender","level","province","userId","userName","发现","真的","看看","心里","今天","都是","总是","不要"};
         List<HotWord> list=new ArrayList<>();
         for(Word2Vec vec:vecData){
             boolean canAdd=true;
@@ -102,7 +104,13 @@ public class MlDataRepositoryImpl implements MlDataRepository {
 
         Query query = new Query(Criteria.where("song_id").is(Id));
         CommentData commentData = mongoTemplate.findOne(query, CommentData.class);
-
+        Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+        for (Comment comment : commentData.getCommentList()) {
+            Matcher m = p.matcher(comment.getContent());
+            String newComment = m.replaceAll("");
+            comment.setContent(newComment);
+        }
         return commentData;
+
     }
 }

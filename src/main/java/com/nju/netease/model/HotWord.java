@@ -8,15 +8,18 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.io.Serializable;
 import java.util.List;
 
-
+@Document(collection="HotWord")
 public class HotWord implements Serializable {
 
     private static final long serialVersionUID = -3258839839160856613L;
+    @Id
+    private Object id;
 
 
-
+    @Field("word")
     private String word;
 
+    @Field("rate")
     private Double rate;
 
     public HotWord(String word, Double rate) {
